@@ -1,6 +1,4 @@
-import subprocess
-import os
-import portage
+import subprocess, os, portage
 dbapi = portage.db[portage.root]["vartree"].dbapi
 try:
     package_match = dbapi.match("sys-apps/bpm")[-1]
@@ -10,6 +8,9 @@ except IndexError:
     FLAGS = []
 
 def main(package_name: str):
+    def pip(name):
+        pass
+    def bpm(name)
     portagedatabase = "/var/db/repos"
     available_portage_packages = set()
     ignore = {"profiles", "metadata", "licenses", "scripts", "eclass"}
@@ -28,20 +29,21 @@ def main(package_name: str):
                                                     if pkg.is_dir():
                                                         available_portage_packages.add(f"{cat.name}/{pkg.name}")
                                         except PermissionError:
-                                            continue
+                                            print("Please report, this is bug.")
                         except PermissionError:
-                            continue
+                            print("Please report, this is bug.")
         except PermissionError:
-            pass
-        if package_name in available_portage_packages:
+            print("Please report, this is bug.")
+        if (package_name in available_portage_packages) and pip(package_name) and bpm(package_name):
+            print("")
+        elif package_name in available_portage_packages:
             command = subprocess.run(
-                ["emerge", package_name], 
-                stdout=subprocess.DEVNULL, 
-                stderr=subprocess.DEVNULL
-            )
+                ["emerge", package_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             if command.returncode == 0:
                 print(f"Installing {package_name}, was sucessfull.")
             else:
                 print("Something has gone wrong.")
-    elif os.path.exists(portagedatabase):
-        print("hihi")
+        elif pip(package_name):
+
+    elif not os.path.exists(portagedatabase):
+        print("Please, create a folder at /var/db/repos")
