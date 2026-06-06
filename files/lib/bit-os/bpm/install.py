@@ -1,5 +1,7 @@
-import subprocess, os, portage, socket, sqlite3
-dbapi = portage.db[portage.root]["vartree"].dbapi
+import subprocess, os, socket, sqlite3
+import portage as gentoopackagemanager
+
+dbapi = gentoopackagemanager.db[gentoopackagemanager.root]["vartree"].dbapi
 try:
     package_match = dbapi.match("sys-apps/bpm")[-1]
     use_flags = dbapi.aux_get(package_match, ["USE"])[0]
