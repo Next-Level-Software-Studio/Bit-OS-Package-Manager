@@ -11,11 +11,10 @@ def main(package_name: str):
     if gentoodatabase.exists():
         ignore = ["profiles", "metadata", "licenses", "scripts"]
         categories = [p for p in gentoodatabase.iterdir() if p.is_dir() and p.name not in ignore]
-        packages = []
+        available_portage_packages = []
         for cat in categories:
             for pkg in cat.iterdir():
                 if pkg.is_dir():
-                    packages.append(f"{pkg.parent.name}/{pkg.name}")
-        print(packages)
+                    available_portage_packages.append(f"{pkg.parent.name}/{pkg.name}")
     elif not gentoodatabase.exists():
         pass
