@@ -16,7 +16,7 @@ def main(package_name: str):
         except OSError:
             return False
     def bpm(name):
-        
+        bpmdatabase = ""
     def portage(name):
         portagedatabase = "/var/db/repos"
         available_portage_packages = set()
@@ -34,7 +34,7 @@ def main(package_name: str):
                                                 with os.scandir(cat.path) as pkgs:
                                                     for pkg in pkgs:
                                                         if pkg.is_dir():
-                                                            available_portage_packages.add(f"{cat.name}/{pkg.name}::gentoo")
+                                                            available_portage_packages.add(f"{cat.name}/{pkg.name}::gentoo|portage")
                                                 return available_portage_packages
                                             except PermissionError:
                                                 return False
