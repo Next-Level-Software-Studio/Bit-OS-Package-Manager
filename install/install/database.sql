@@ -1,7 +1,7 @@
 PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS packages (
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    name     TEXT NOT NULL UNIQUE,
+    name     TEXT NOT NULL,
     version  TEXT NOT NULL,
     provider TEXT NOT NULL,
     owner    TEXT
