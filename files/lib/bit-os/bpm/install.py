@@ -2,7 +2,7 @@ from pathlib import Path
 import subprocess, portage, os
 
 vartree = portage.db[portage.root]["vartree"]
-package_match = vartree.dbapi.match("app-misc/fastfetch")[-1]
+package_match = vartree.dbapi.match("sys-apps/bpm")[-1]
 use_flags = vartree.dbapi.aux_get(package_match, ["USE"])[0]
 FLAGS =use_flags.split()
 
@@ -27,5 +27,11 @@ def main(package_name: str):
                                         continue
                     except PermissionError:
                         continue
+        if package_name in available_portage_packages:
+            command = subprocess.run(["emerge", package_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if command.returncode == 0:
+                print(f"Installing {package_name}, was sucessfull.")
+            else:
+                print(f"Something has gone wrong.")
     elif not portagedatabase.exists():
         pass
