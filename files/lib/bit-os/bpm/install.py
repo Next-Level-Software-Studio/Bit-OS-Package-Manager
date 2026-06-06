@@ -1,4 +1,4 @@
-import subprocess, os, portage, socket
+import subprocess, os, portage, socket, sqlite3
 dbapi = portage.db[portage.root]["vartree"].dbapi
 try:
     package_match = dbapi.match("sys-apps/bpm")[-1]
@@ -16,7 +16,7 @@ def main(package_name: str):
         except OSError:
             return False
     def bpm(name):
-        pass
+        
     def portage(name):
         portagedatabase = "/var/db/repos"
         available_portage_packages = set()
@@ -34,7 +34,7 @@ def main(package_name: str):
                                                 with os.scandir(cat.path) as pkgs:
                                                     for pkg in pkgs:
                                                         if pkg.is_dir():
-                                                            available_portage_packages.add(f"{cat.name}/{pkg.name}")
+                                                            available_portage_packages.add(f"{cat.name}/{pkg.name}::gentoo")
                                                 return available_portage_packages
                                             except PermissionError:
                                                 return False
@@ -42,25 +42,12 @@ def main(package_name: str):
                                 return False
             except PermissionError:
                 return False
-
-        if package_name in available_portage_packages:
-            existsinportage = True
-        elif package_name not in available_portage_packages:
-            existsinportage = False
-
-        if 
-        
-        if existsinportage is True and bpm(package_name):
-            print("A package is duplicated.")
-        elif existsinportage is True and not bpm(package_name):
-            command = subprocess.run(["emerge", package_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            if command.returncode == 0:
-                print(f"Installing {package_name}, was sucessfull.")
-            else:
-                print("Something has gone wrong.")
-        elif existsinportage is False and bpm(package_name):
-            pass
-        elif existsinportage is False and not bpm(package_name):
-            print("O pacote não está disponível.")
-    elif not os.path.exists(portagedatabase):
-        print("Please, create a folder at /var/db/repos")
+    if portage(package_name):
+        existsinportage = True
+    elif portage(package_name) is False:
+        existsinportage = False
+    
+    if bpm(package_name):
+        existsinbpm = True
+    elif bpm(package_name) is False:
+        existsinbpm = False
