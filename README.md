@@ -1,8 +1,10 @@
 # Bit-OS-Package-Manager
-A Next Level Software Studio project.
+O BPM é o gestor de pacotes principal do Bit-OS, mas que também é compatível com Gentoo Linux.
+
+Para instalar em Gentoo Linux execute os seguintes comandos como administrador:
 
 ```
-FOLDER="/home/usuario/Downloads/bit-os-install"
+FOLDER="/h"
 mkdir -p "$FOLDER"
 git init "$FOLDER"
 git -C "$FOLDER" remote add origin https://github.com/Next-Level-Software-Studio/Bit-OS-Package-Manager.git
