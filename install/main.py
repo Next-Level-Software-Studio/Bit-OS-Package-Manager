@@ -1,4 +1,5 @@
 import os, sqlite3
+## Database creation
 db = "/var/lib/bpm/main.db"
 deps = ['rdepend', 'depend', 'idepend', 'bdepend', 'ndepend', 'fdepend']
 try:
